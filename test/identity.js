@@ -1,4 +1,18 @@
 contract('Identity', function(accounts) {
+
+ it("should be able to get back a return value", function(done) {
+    answer = MyAnswer.deployed();
+    Identity.new().
+    then(function(identity){
+        fake_answer = MyAnswer.at(answer.address);
+        fake_answer.getAnswer.call().
+          then(function(result) {
+            assert.equal(result, 42);
+            done();
+          }).catch(done);
+    }).catch(done);
+  })
+
   it("should allow upgrades that add storage data", function(done) {
     one = MyOne.deployed();
     Identity.new().
